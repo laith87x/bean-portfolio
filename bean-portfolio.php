@@ -29,9 +29,9 @@ define( 'BEANPORTFOLIO_EDD_TB_NAME', 'Bean Portfolio' );
 //INCLUDE UPDATER
 if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 	include( dirname( __FILE__ ) . '/updates/EDD_SL_Plugin_Updater.php' );
-	include( dirname( __FILE__ ) . '/updates/EDD_SL_Setup.php' );
 }
 
+include( dirname( __FILE__ ) . '/updates/EDD_SL_Setup.php' );
 //LICENSE KEY
 $license_key = trim( get_option( 'edd_beanportfolio_license_key' ) );
 
