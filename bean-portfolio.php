@@ -3,8 +3,8 @@
  * Plugin Name: Bean Portfolio
  * Plugin URI: http://themebeans.com/plugin/portfolio-wordpress-plugin/?ref=plugin_bean_portfolios
  * Description: Enables a portfolio post type for use in our Bean WordPress Themes
- * Version: 1.2.1
- * Author: ThemeBeans
+ * Version: 1.3
+ * Author: Rich Tabor / ThemeBeans
  * Author URI: http://themebeans.com/?ref=plugin_bean_portfolios
  *
  *
@@ -38,7 +38,7 @@ $license_key = trim( get_option( 'edd_beanportfolio_license_key' ) );
 
 //CURRENT BUILD
 $edd_updater = new EDD_SL_Plugin_Updater( BEANPORTFOLIO_EDD_TB_URL, __FILE__, array(
-		'version' 	=> '1.2.1',
+		'version' 	=> '1.3',
 		'license' 	=> $license_key,
 		'item_name' => BEANPORTFOLIO_EDD_TB_NAME,
 		'author' 	=> 'ThemeBeans'
@@ -419,19 +419,19 @@ function bean_portfolio_admin_page()
 		<p>Display and maintain your online portfolio with our Bean Portfolio Plugin. You maintain complete control of your portfolio posts – even if you switch themes.  If you like this plugin, consider checking out our other <a href="http://themebeans.com/plugins/?ref=bean_portfolio" target="blank">Free Plugins</a> and our <a href="http://themebeans.com/themes/?ref=bean_portfolio" target="blank">Premium WordPress Themes</a>. Cheers!</p><br />
 
 		<h4 style="font-size: 15px; font-weight: 600; color: #222; margin-bottom: 10px;"><?php _e('Activate License'); ?></h4>
-		<p>Enter the license key <code style="padding: 1px 5px 2px; background-color: #FFF; border-radius: 2px; font-weight: bold; font-family: 'Open Sans',sans-serif;">BEANPLUGIN</code>, hit Save, then Activate, to turn on the plugin updater. You'll then be able to update this plugin from your Plugins Dashboard when future updates are available.</p>
+		<p>Enter the license key <code style="padding: 1px 5px 2px; background-color: #FFF; border-radius: 2px; font-weight: bold; font-family: 'Open Sans',sans-serif;">BEANPORTFOLIO</code>, hit Save, then Activate, to turn on the plugin updater. You'll then be able to update this plugin from your Plugins Dashboard when future updates are available.</p>
 
 		<form method="post" action="options.php">
 			<?php settings_fields('edd_beanportfolio_license'); ?>
 			<input id="edd_beanportfolio_license_key" name="edd_beanportfolio_license_key" type="text" class="regular-text" value="<?php esc_attr_e( $license ); ?>" />
 				<?php if( $status !== false && $status == 'valid' ) { ?>
 					<?php wp_nonce_field( 'edd_beanportfolio_nonce', 'edd_beanportfolio_nonce' ); ?>
-					<input type="submit" class="button-secondary" name="edd_license_deactivate" style="outline: none!important;" value="<?php _e('Deactivate License'); ?>"/>
+					<input type="submit" class="button-secondary" name="edd_beanportfolio_license_deactivate" style="outline: none!important;" value="<?php _e('Deactivate License'); ?>"/>
 					<span style="color: #7AD03A;"><?php _e('&nbsp;&nbsp;Good to go!'); ?></span>
 				<?php } else {
 					wp_nonce_field( 'edd_beanportfolio_nonce', 'edd_beanportfolio_nonce' ); ?>
 					<input type="submit" name="submit" id="submit" class="button button-secondary" value="Save License Key">
-					<input type="submit" class="button-secondary" name="edd_license_activate" style="outline: none!important;" value="<?php _e('Activate License'); ?>"/>
+					<input type="submit" class="button-secondary" name="edd_beanportfolio_license_activate" style="outline: none!important;" value="<?php _e('Activate License'); ?>"/>
 					<span style="color: #DD3D36;"><?php _e('&nbsp;&nbsp;Inactive'); ?></span>
 				<?php } ?>
 		</form>

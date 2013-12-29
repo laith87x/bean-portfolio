@@ -6,7 +6,7 @@
  * @package Bean Plugins
  * @subpackage BeanPortfolio
  * @author ThemeBeans
- * @since BeanPortfolio 1.2
+ * @since BeanPortfolio 1.3
  */
  
 /*===================================================================*/
@@ -36,7 +36,7 @@ function edd_bean_portfolio_sanitize_license( $new )
 function edd_beanportfolio_activate_license() 
 {
 	//LISTEN FOR ACTIVATE BUTTON
-	if( isset( $_POST['edd_license_activate'] ) ) {
+	if( isset( $_POST['edd_beanportfolio_license_activate'] ) ) {
 
 		//SECUIRTY CHECK
 	 	if( ! check_admin_referer( 'edd_beanportfolio_nonce', 'edd_beanportfolio_nonce' ) ) 	
@@ -75,7 +75,7 @@ add_action('admin_init', 'edd_beanportfolio_activate_license');
 function edd_beanportfolio_deactivate_license() 
 {
 	//LISTEN FOR ACTIVATION CLICK
-	if( isset( $_POST['edd_license_deactivate'] ) ) 
+	if( isset( $_POST['edd_beanportfolio_license_deactivate'] ) ) 
 	{
 		//SECURITY CHECK
 	 	if( ! check_admin_referer( 'edd_beanportfolio_nonce', 'edd_beanportfolio_nonce' ) ) 	

@@ -1,22 +1,22 @@
-DEC 13 2013 - Version 1.2.1
+DEC 30 2013 - Version 1.3
 <ul>
-<li>Updater class improvements</li>
+<li>Added a Plugin Updater. Nice!</li>
+<li>Add license into the Settings, Bean Portfolio dashboard link</li>
 </ul>
 
 DEC 12 2013 - Version 1.2
 <ul>
-<li>Added a Plugin Updater. Nice!</li>
 <li>WP3.8 Icon Update</li>
 </ul>
 
 SEPT 5 2013 - Version 1.1.1
 <ul>
-<li>Performance & Maintinance</li>
+<li>Performance & Maintenance</li>
 </ul>	
 
 SEPT 5 2013 - Version 1.1
 <ul>
-<li>Added support for editor thumbnail view.</li>
+<li>Added support for editor thumbnail view</li>
 </ul>	
 	
 JUN 3 2013 - Version 1.0
