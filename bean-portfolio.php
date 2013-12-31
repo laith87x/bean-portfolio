@@ -18,9 +18,7 @@
 
 
 /*===================================================================*/
-/*
 /* PLUGIN UPDATER
-/*
 /*===================================================================*/
 //CONSTANTS
 define( 'BEANPORTFOLIO_EDD_TB_URL', 'http://themebeans.com' );
@@ -49,9 +47,7 @@ $edd_updater = new EDD_SL_Plugin_Updater( BEANPORTFOLIO_EDD_TB_URL, __FILE__, ar
 
 
 /*===================================================================*/
-/*
 /* PLUGIN CLASS
-/*
 /*===================================================================*/
 if ( ! class_exists( 'Bean_Portfolio_Post_Type' ) ) :
 class Bean_Portfolio_Post_Type
@@ -397,9 +393,7 @@ endif;
 
 
 /*===================================================================*/
-/*
 /* ADMIN PAGE FOR LICENSE ENTRY
-/*
 /*===================================================================*/
 //MENU LINK
 function bean_portfolio_admin_menu() {
