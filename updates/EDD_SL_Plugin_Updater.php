@@ -1,15 +1,5 @@
 <?php
-/**
- * This file controls plugin updater API calls.
- *
- *  
- * @package Bean Plugins
- * @subpackage BeanPortfolio
- * @author ThemeBeans
- * @since BeanPortfolio 1.3
- */
- 
-//UNCOMMENT THIS LINE FOR TESTING
+//uncomment this line for testing
 //set_site_transient( 'update_plugins', null );
 
 /**
@@ -47,7 +37,7 @@ class EDD_SL_Plugin_Updater {
 	}
 
 	/**
-	 * Set up Wordpress filters to hook into WP's update process.
+	 * Set up WordPress filters to hook into WP's update process.
 	 *
 	 * @uses add_filter()
 	 *
@@ -56,19 +46,20 @@ class EDD_SL_Plugin_Updater {
 	private function hook() {
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'pre_set_site_transient_update_plugins_filter' ) );
 		add_filter( 'plugins_api', array( $this, 'plugins_api_filter' ), 10, 3 );
+		add_filter( 'http_request_args', array( $this, 'http_request_args' ), 10, 2 );
 	}
 
 	/**
 	 * Check for Updates at the defined API endpoint and modify the update array.
 	 *
-	 * This function dives into the update api just when Wordpress creates its update array,
+	 * This function dives into the update API just when WordPress creates its update array,
 	 * then adds a custom API call and injects the custom plugin data retrieved from the API.
-	 * It is reassembled from parts of the native Wordpress plugin update code.
+	 * It is reassembled from parts of the native WordPress plugin update code.
 	 * See wp-includes/update.php line 121 for the original wp_update_plugins() function.
 	 *
 	 * @uses api_request()
 	 *
-	 * @param array $_transient_data Update array build by Wordpress.
+	 * @param array $_transient_data Update array build by WordPress.
 	 * @return array Modified update array with custom plugin data.
 	 */
 	function pre_set_site_transient_update_plugins_filter( $_transient_data ) {
@@ -83,7 +74,7 @@ class EDD_SL_Plugin_Updater {
 		if( false !== $api_response && is_object( $api_response ) && isset( $api_response->new_version ) ) {
 			if( version_compare( $this->version, $api_response->new_version, '<' ) )
 				$_transient_data->response[$this->name] = $api_response;
-	}
+		}
 		return $_transient_data;
 	}
 
@@ -107,6 +98,22 @@ class EDD_SL_Plugin_Updater {
 		if ( false !== $api_response ) $_data = $api_response;
 
 		return $_data;
+	}
+
+
+	/**
+	 * Disable SSL verification in order to prevent download update failures
+	 *
+	 * @param array $args
+	 * @param string $url
+	 * @return object $array
+	 */
+	function http_request_args( $args, $url ) {
+		// If it is an https request and we are performing a package download, disable ssl verification
+		if( strpos( $url, 'https://' ) !== false && strpos( $url, 'edd_action=package_download' ) ) {
+			$args['sslverify'] = false;
+		}
+		return $args;
 	}
 
 	/**
@@ -133,11 +140,12 @@ class EDD_SL_Plugin_Updater {
 			return;
 
 		$api_params = array(
-			'edd_action' 	=> 'get_version',
-			'license' 		=> $data['license'],
-			'name' 			=> $data['item_name'],
-			'slug' 			=> $this->slug,
-			'author'		=> $data['author']
+			'edd_action' => 'get_version',
+			'license'    => $data['license'],
+			'name'       => $data['item_name'],
+			'slug'       => $this->slug,
+			'author'     => $data['author'],
+			'url'        => home_url()
 		);
 		$request = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
 
