@@ -3,7 +3,7 @@
  * Plugin Name: Bean Portfolio
  * Plugin URI: http://themebeans.com/plugin/portfolio-wordpress-plugin/?ref=plugin_bean_portfolios
  * Description: Enables a portfolio post type for use in our Bean WordPress Themes
- * Version: 1.4
+ * Version: 1.4.1
  * Author: Rich Tabor / ThemeBeans
  * Author URI: http://themebeans.com/?ref=plugin_bean_portfolios
  *
@@ -24,29 +24,33 @@ if ( !function_exists( 'add_action' ) )
     exit;
 }
 
+
+
+
 /*===================================================================*/
 /*
 /* PLUGIN FEATURES SETUP
 /*
 /*===================================================================*/
-
 $bean_plugin_features[ plugin_basename( __FILE__ ) ] = array(
-        "updates"       => true    // Whether to utilize plugin updates feature or not
-    );
+     "updates" => false // CHANGE THIS TO FALSE TO TURN OFF UPDATES
+);
 
+if ( ! function_exists( 'bean_plugin_supports' ) ) 
+{
+	function bean_plugin_supports( $plugin_basename, $feature ) 
+	{
+		global $bean_plugin_features;
 
-if ( ! function_exists( 'bean_plugin_supports' ) ) {
-    function bean_plugin_supports( $plugin_basename, $feature ) {
-        global $bean_plugin_features;
+		$setup = $bean_plugin_features;
 
-        $setup = $bean_plugin_features;
-
-        if( isset( $setup[$plugin_basename][$feature] ) && $setup[$plugin_basename][$feature] )
-            return true;
-        else
-            return false;
-    }
+		if( isset( $setup[$plugin_basename][$feature] ) && $setup[$plugin_basename][$feature] )
+			return true;
+		else
+			return false;
+	}
 }
+
 
 
 
@@ -91,10 +95,10 @@ function edd_beanportfolio_plugin_updater()
 	$license_key = trim( get_option( 'edd_beanportfolio_activate_license' ) );
 
 	$edd_updater = new EDD_SL_Plugin_Updater( EDD_BEANPORTFOLIO_TB_URL, __FILE__, array( 
-			'version' 	=> '1.4',
+			'version' 	=> '1.4.1',
 			'license' 	=> $license_key,
-			'item_name' => EDD_BEANPORTFOLIO_NAME,
-			'author' 	=> 'Rich Tabor / ThemeBeans'
+			'item_name'    => EDD_BEANPORTFOLIO_NAME,
+			'author' 	     => 'Rich Tabor / ThemeBeans'
 		)
 	);
 }
@@ -172,27 +176,27 @@ class Bean_Portfolio_Post_Type
 	{
 		// REGISTER THE POST TYPE
 		$labels = array(
-			'name' 				 => __( 'Portfolio', 'bean' ),
+			'name' 			 => __( 'Portfolio', 'bean' ),
 			'singular_name' 	 => __( 'Portfolio Post', 'bean' ),
-			'add_new' 			 => __( 'Add New', 'bean' ),
+			'add_new' 		 => __( 'Add New', 'bean' ),
 			'add_new_item'		 => __( 'Add New Portfolio', 'bean' ),
 			'edit_item' 		 => __( 'Edit Portfolio', 'bean' ),
-			'new_item' 			 => __( 'Add New', 'bean' ),
+			'new_item' 		 => __( 'Add New', 'bean' ),
 			'view_item' 		 => __( 'View Portfolio', 'bean' ),
-			'search_items' 		 => __( 'Search Portfolio', 'bean' ),
+			'search_items' 	 => __( 'Search Portfolio', 'bean' ),
 			'not_found' 		 => __( 'No portfolio items found', 'bean' ),
 			'not_found_in_trash' => __( 'No portfolio items found in trash', 'bean' )
 		);
 
 		$args = array(
-	    	'labels' 			=> $labels,
-	    	'public' 			=> true,
-			'supports' 			=> array( 'title', 'editor', 'excerpt', 'thumbnail'),
+	    		'labels' 			=> $labels,
+	    		'public' 			=> true,
+			'supports' 		=> array( 'title', 'editor', 'excerpt', 'thumbnail', 'comments'),
 			'capability_type' 	=> 'post',
-			'rewrite' 			=> array("slug" => "portfolio"),
+			'rewrite' 		=> array("slug" => "portfolio"),
 			'menu_position' 	=> 20,
 			'has_archive' 		=> true,
-			'menu_icon'		    => '',
+			'menu_icon'		=> '',
 		);
 
 		$args = apply_filters('bean_args', $args);
